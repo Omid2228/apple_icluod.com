@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تخفیف و هدیه ویژه</title>
+    <style>
+        body {
+            font-family: Tahoma, Segoe UI, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 360px;
+            width: 85%;
+        }
+        .gift-icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        h2 { color: #333; margin: 0 0 10px 0; font-size: 22px; }
+        p { color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 25px; }
+        input[type="tel"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            box-sizing: border-box;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            letter-spacing: 2px;
+            transition: border-color 0.3s;
+        }
+        input[type="tel"]:focus {
+            border-color: #667eea;
+            outline: none;
+        }
+        button {
+            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        button:active { transform: scale(0.98); }
+        .success-msg {
+            display: none;
+            color: #28a745;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="gift-icon">🎉</div>
+    <h2>هدیه ویژه شما آماده است!</h2>
+    <p>شماره موبایل خود را وارد کنید تا کاتالوگ محصولات و کد تخفیف اختصاصی بلافاصله برای شما ارسال شود.</p>
+    
+    <form id="leadForm">
+        <input type="tel" id="phone" placeholder="09123456789" required pattern="09[0-9]{9}" inputmode="numeric">
+        <button type="submit" id="submitBtn">تایید و دریافت هدیه</button>
+    </form>
+    <div class="success-msg" id="successMsg">✓ شماره شما با موفقیت ثبت شد!</div>
+</div>
+
+<script>
+    document.getElementById('leadForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const phoneNumber = document.getElementById('phone').value;
+        const btn = document.getElementById('submitBtn');
+        const msg = document.getElementById('successMsg');
+        
+        btn.disabled = true;
+        btn.style.opacity = '0.7';
+        btn.innerText = 'در حال ارسال...';
+
+        // اتصال به پنل پیامک (این بخش را بعداً می‌توانید با API خود ست کنید)
+        // در حال حاضر اطلاعات به صورت پیش‌فرض ذخیره یا شبیه‌سازی می‌شود
+        setTimeout(() => {
+            msg.style.display = 'block';
+            btn.innerText = 'ثبت شد';
+            alert('با تشکر! شماره ' + phoneNumber + ' ثبت شد.');
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>
