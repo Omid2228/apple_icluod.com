@@ -3,105 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تخفیف و هدیه ویژه</title>
+    <title>سیستم تأیید اصالت و استعلام مدرک</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
     <style>
-        body {
-            font-family: Tahoma, Segoe UI, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            padding: 40px 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-            text-align: center;
-            max-width: 360px;
-            width: 85%;
-        }
-        .gift-icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-        h2 { color: #333; margin: 0 0 10px 0; font-size: 22px; }
-        p { color: #666; font-size: 14px; line-height: 1.6; margin-bottom: 25px; }
-        input[type="tel"] {
-            width: 100%;
-            padding: 14px;
-            margin-bottom: 20px;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            box-sizing: border-box;
-            text-align: center;
-            font-size: 18px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            transition: border-color 0.3s;
-        }
-        input[type="tel"]:focus {
-            border-color: #667eea;
-            outline: none;
-        }
-        button {
-            background: linear-gradient(135deg, #28a745 0%, #218838 100%);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 10px rgba(40, 167, 69, 0.3);
-            transition: transform 0.2s, opacity 0.2s;
-        }
-        button:active { transform: scale(0.98); }
-        .success-msg {
-            display: none;
-            color: #28a745;
-            font-weight: bold;
-            margin-top: 15px;
-        }
+        body { font-family: 'Vazirmatn', sans-serif; }
     </style>
 </head>
-<body>
+<body class="bg-gray-50 flex flex-col min-h-screen justify-between">
 
-<div class="container">
-    <div class="gift-icon">🎉</div>
-    <h2>هدیه ویژه شما آماده است!</h2>
-    <p>شماره موبایل خود را وارد کنید تا کاتالوگ محصولات و کد تخفیف اختصاصی بلافاصله برای شما ارسال شود.</p>
-    
-    <form id="leadForm">
-        <input type="tel" id="phone" placeholder="09123456789" required pattern="09[0-9]{9}" inputmode="numeric">
-        <button type="submit" id="submitBtn">تایید و دریافت هدیه</button>
-    </form>
-    <div class="success-msg" id="successMsg">✓ شماره شما با موفقیت ثبت شد!</div>
-</div>
+    <header class="bg-white shadow-sm border-b border-gray-200 py-4">
+        <div class="max-w-4xl mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold text-gray-800">سامانه استعلام و تأیید اصالت</h1>
+            <span class="text-sm text-gray-500">پورتال خدمات الکترونیک</span>
+        </div>
+    </header>
 
-<script>
-    document.getElementById('leadForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const phoneNumber = document.getElementById('phone').value;
-        const btn = document.getElementById('submitBtn');
-        const msg = document.getElementById('successMsg');
-        
-        btn.disabled = true;
-        btn.style.opacity = '0.7';
-        btn.innerText = 'در حال ارسال...';
+    <main class="flex-grow max-w-2xl w-full mx-auto px-4 py-12">
+        <div class="bg-white rounded-2xl shadow-md p-6 border border-gray-100">
+            <h2 class="text-lg font-semibold text-gray-700 mb-2">تأیید اصالت گواهی / شماره عضویت</h2>
+            <p class="text-sm text-gray-500 mb-6">لطفاً شماره ثبت یا کد رهگیری مورد نظر را برای استعلام وارد نمایید.</p>
 
-        // اتصال به پنل پیامک (این بخش را بعداً می‌توانید با API خود ست کنید)
-        // در حال حاضر اطلاعات به صورت پیش‌فرض ذخیره یا شبیه‌سازی می‌شود
-        setTimeout(() => {
-            msg.style.display = 'block';
-            btn.innerText = 'ثبت شد';
-            alert('با تشکر! شماره ' + phoneNumber + ' ثبت شد.');
-        }, 1000);
-    });
-</script>
+            <form id="verifyForm" class="space-y-4">
+                <div>
+                    <label for="regNumber" class="block text-sm font-medium text-gray-700 mb-1">شماره ثبت (Registration Number)</label>
+                    <input type="text" id="regNumber" required placeholder="مثال: AMC-12345" 
+                           class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition text-left tracking-wider font-mono">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition shadow-sm">
+                    بررسی و استعلام
+                </button>
+            </form>
 
+            <div id="loading" class="hidden text-center py-6">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
+                <p class="text-sm text-gray-500 mt-2">در حال جستجو در سیستم...</p>
+            </div>
+
+            <div id="errorMessage" class="hidden mt-6 bg-red-50 border-r-4 border-red-500 text-red-700 p-4 rounded-lg text-sm">
+                کد وارد شده در سیستم یافت نشد یا معتبر نمی‌باشد.
+            </div>
+
+            <div id="resultCard" class="hidden mt-6 border border-green-200 rounded-xl bg-green-50/30 overflow-hidden">
+                <div class="bg-green-600 text-white px-4 py-3 flex items-center justify-between">
+                    <span class="font-semibold text-sm">✓ اطلاعات مورد تایید است</span>
+                    <span id="resCode" class="font-mono text-sm"></span>
+                </div>
+                <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700">
+                    <div class="border-b md:border-b-0 pb-2 md:pb-0"><span class="font-medium text-gray-500">نام و نام خانوادگی:</span> <span id="resName" class="font-semibold"></span></div>
+                    <div class="border-b md:border-b-0 pb-2 md:pb-0"><span class="font-medium text-gray-500">مقطع تحصیلی:</span> <span id="resDegree"></span></div>
+                    <div class="border-b md:border-b-0 pb-2 md:pb-0"><span class="font-medium text-gray-500">رشته تخصصی:</span> <span id="resField"></span></div>
+                    <div class="border-b md:border-b-0 pb-2 md:pb-0"><span class="font-medium text-gray-500">دانشگاه محل اخذ:</span> <span id="resUni"></span></div>
+                    <div class="border-b md:border-b-0 pb-2 md:pb-0"><span class="font-medium text-gray-500">سال فارغ‌التحصیلی:</span> <span id="resYear"></span></div>
+                    <div><span class="font-medium text-gray-500">رتبه علمی / وضعیت:</span> <span id="resRank" class="text-green-700 font-semibold"></span></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="bg-gray-100 py-4 text-center text-xs text-gray-400 border-t border-gray-200">
+        تمامی حقوق برای این سامانه محفوظ است.
+    </footer>
+
+    <script>
+        document.getElementById('verifyForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const regNumber = document.getElementById('regNumber').value.trim();
+            const loading = document.getElementById('loading');
+            const resultCard = document.getElementById('resultCard');
+            const errorMessage = document.getElementById('errorMessage');
+
+            // پنهان کردن نتایج قبلی
+            resultCard.classList.add('hidden');
+            errorMessage.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            // شبیه‌سازی درخواست به سرور (مدت زمان ۲ ثانیه)
+            setTimeout(() => {
+                loading.classList.add('hidden');
+
+                // در حالت واقعی، اینجا یک درخواست API به بک‌اند زده می‌شود.
+                // در اینجا یک نمونه فرضی برای تست قرار داده‌ایم:
+                if (regNumber.toLowerCase() === 'amc-12345') {
+                    document.getElementById('resCode').innerText = regNumber;
+                    document.getElementById('resName').innerText = 'احمد رضایی';
+                    document.getElementById('resDegree').innerText = 'دکتری حرفه‌ای';
+                    document.getElementById('resField').innerText = 'پزشکی عمومی';
+                    document.getElementById('resUni').innerText = 'دانشگاه علوم پزشکی تهران';
+                    document.getElementById('resYear').innerText = '۱۳۹۹';
+                    document.getElementById('resRank').innerText = 'فعال / تایید شده';
+                    
+                    resultCard.classList.remove('hidden');
+                } else {
+                    errorMessage.classList.remove('hidden');
+                }
+            }, 1500);
+        });
+    </script>
 </body>
 </html>
